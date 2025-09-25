@@ -1,0 +1,379 @@
+/* ==========================================================================
+   FONT DEFINITIONS
+   ========================================================================== */
+
+@font-face {
+    font-family: 'Dunkin Bold';
+    src: url('../fonts/DunkinBold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KBCloudyDay';
+    src: url('../fonts/KBCloudyDay.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PorkyRegular';
+    src: url('../fonts/PORKYS_.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ==========================================================================
+   BACKGROUND UTILITIES
+   ========================================================================== */
+
+/**
+ * Subtle pixel grid background overlay
+ * Creates a subtle dotted grid pattern for pixelated aesthetic
+ */
+.pixel-bg {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 10px 10px;
+}
+
+/* ==========================================================================
+   PIXEL ART UTILITIES
+   ========================================================================== */
+
+/**
+ * Force crisp-edge rendering for pixel art elements
+ * Ensures pixelated graphics maintain their sharp appearance
+ */
+.pixel-icon, 
+.pixel-heart-icon {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+/**
+ * CSS-drawn Pixel Heart Icon
+ * Creates a pixelated heart shape using CSS transforms and clip-path
+ */
+.pixel-heart-icon {
+    width: 48px;
+    height: 48px;
+    background-color: #f4bbd9; 
+    transform: rotate(45deg);
+    box-shadow: 2px 2px 0px #ab2a4d;
+    clip-path: polygon(50% 0%, 67% 0%, 100% 17%, 100% 25%, 83% 42%, 75% 50%, 50% 75%, 25% 50%, 17% 42%, 0% 25%, 0% 17%, 33% 0%);
+}
+
+/* ==========================================================================
+   FEATURE ITEMS COMPONENT
+   ========================================================================== */
+
+/**
+ * Feature Item Container
+ * Base styling for feature navigation items in dashboard
+ * Uses Tailwind-inspired utility classes for consistency
+ */
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-width: 2px;
+    border-color: rgba(189, 250, 253, 0.3);
+    border-radius: 0.375rem; 
+    transition: all 200ms ease;
+}
+
+/**
+ * Feature Item Hover State
+ * Provides interactive feedback with elevation and border changes
+ */
+.feature-item:hover {
+    transform: translateY(-0.5rem); 
+    background-color: rgba(0, 0, 0, 0.4);
+    border-color: #bdfafd; 
+    box-shadow: 0 8px 0px 0px rgba(189, 250, 253, 0.3), 0 0 20px 0px rgba(137, 255, 198, 0.3);
+}
+
+/**
+ * Pixel Icon Base Styles
+ * Container for pixelated icons with consistent sizing and appearance
+ */
+.pixel-icon {
+    width: 3rem; 
+    height: 3rem;
+    margin-bottom: 0.5rem; 
+    border-width: 2px;
+    border-color: rgba(247, 227, 239, 0.5); 
+    border-radius: 0.125rem; 
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); 
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+}
+
+/**
+ * Feature Label Text
+ * Typography styling for feature item labels
+ */
+.feature-label {
+    font-size: 1.125rem; 
+    color: #f4bbd9; 
+}
+
+/* ==========================================================================
+   BUTTON COMPONENTS
+   ========================================================================== */
+
+/**
+ * Primary Pixelated Button
+ * Custom styled button with 3D pixelated appearance and interactive states
+ */
+.btn-pixel {
+    font-family: 'Dunkin Bold', sans-serif; 
+    font-size: 1rem; /* text-xl */
+    text-transform: uppercase;
+    padding-top: 0.75rem; /* py-3 */
+    padding-bottom: 0.75rem; /* py-3 */
+    padding-left: 1.5rem; /* px-6 */
+    padding-right: 1.5rem; /* px-6 */
+    background-color: #f6967c; /* bg-tertiary */
+    color: #ffffff; /* text-white */
+    cursor: pointer;
+    transition: all 100ms ease-out;
+    box-shadow: 4px 4px 0px 0px #ab6a58, -2px -2px 0px 0px #ffc1ad;
+}
+
+.btn-pixel:hover {
+    transform: translate(-0.25rem, -0.25rem); /* -translate-x-1 -translate-y-1 */
+    box-shadow: 6px 6px 0px 0px #ab6a58, -2px -2px 0px 0px #ffc1ad;
+}
+
+.btn-pixel:active {
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0px 0px #ab6a58, -1px -1px 0px 0px #ffc1ad;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+/**
+ * Tablet and Desktop Breakpoint (768px and up)
+ * Responsive adjustments for larger screens
+ */
+@media (min-width: 768px) {
+    .feature-item {
+        padding: 1rem; /* md:p-4 */
+    }
+
+    .pixel-icon {
+        width: 4rem; /* md:w-16 */
+        height: 4rem; /* md:h-16 */
+    }
+    
+    .btn-pixel {
+       font-size: 1.5rem; /* md:text-2xl */
+    }
+}
+
+/* ==========================================================================
+   FEATURE ICONS
+   ========================================================================== */
+
+/**
+ * Individual Feature Icons
+ * Custom SVG icons embedded as base64 data URIs for optimal performance
+ * Each icon maintains thematic consistency with the app's color palette
+ */
+
+/* Water Tracker Icon */
+.icon-water { 
+    background-color: #2c5c63; 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23bdfafd' d='M8,0C4,0,2,4,2,8c0,4,6,8,6,8s6-4,6-8C14,4,12,0,8,0z'/%3E%3C/svg%3E"); 
+}
+
+/* Sleep Tracker Icon */
+.icon-sleep { 
+    background-color: #3e3c63; 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23f7e3ef' d='M2,6h2v2H2V6z M0,8h2v2H0V8z M4,8h2v2H4V8z M2,10h2v2H2V10z'/%3E%3Cpath fill='%23f4bbd9' d='M10,2h2v2h-2V2z M8,4h2v2H8V4z M12,4h2v2h-2V4z M10,6h2v2h-2V6z'/%3E%3C/svg%3E"); 
+}
+
+/* Notes Icon */
+.icon-notes { 
+    background-color: #635048; 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23f6967c' d='M2,0h12v16H2V0z M4,2v2h8V2H4z M4,6v2h8V6H4z M4,10v2h6v-2H4z'/%3E%3C/svg%3E"); 
+}
+
+/* Checklist Icon */
+.icon-checklist { 
+    background-color: #3d6355; 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%2389ffc6' d='M5,2h11v2H5V2z M5,7h11v2H5V7z M5,12h11v2H5V12z'/%3E%3Cpath fill='%23ffffff' d='M0,2h4v2H0V2z M0,7h4v2H0V7z M0,12h4v2H0V12z'/%3E%3C/svg%3E"); 
+}
+
+/* Mood Tracker Icon */
+.icon-mood { 
+    background-color: #615a4b; 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23f7e3ef'/%3E%3Ccircle cx='5' cy='6' r='1' fill='%232c2a4a'/%3E%3Ccircle cx='11' cy='6' r='1' fill='%232c2a4a'/%3E%3Cpath d='M4 10 C4 10, 6 12, 8 12 C10 12, 12 10, 12 10' stroke='%232c2a4a' stroke-width='2' fill='none'/%3E%3C/svg%3E"); 
+}
+
+/* Food Tracker Icon */
+.icon-food { 
+    background-color: #624b59; 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23f4bbd9' d='M2,6h12v8H2V6z'/%3E%3Cpath fill='%23f6967c' d='M1,4h14v2H1V4z'/%3E%3Cpath fill='%23f7e3ef' d='M7,0h2v4H7V0z'/%3E%3C/svg%3E"); 
+}
+
+/* BMI Calculator Icon */
+.icon-bmi { 
+    background-color: #4b4b4b; 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='0' y='14' width='16' height='2' fill='%23f6967c'/%3E%3Crect x='0' y='10' width='12' height='2' fill='%2389ffc6'/%3E%3Crect x='0' y='6' width='8' height='2' fill='%2389ffc6'/%3E%3Crect x='0' y='2' width='4' height='2' fill='%23bdfafd'/%3E%3C/svg%3E"); 
+}
+
+/* Inspirational Quotes Icon */
+.icon-quotes { 
+    background-color: #635338; 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23f7e3ef' d='M0,2h6v6H4v3H0V2z M10,2h6v6h-2v3h-4V2z'/%3E%3C/svg%3E"); 
+}
+
+/* ==========================================================================
+   FORM COMPONENTS
+   ========================================================================== */
+
+/**
+ * Pixelated Input Field
+ * Custom styled input with pixelated aesthetic and focus states
+ */
+.input-pixel {
+    width: 100%;
+    padding: 0.75rem; /* 12px */
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(189, 250, 253, 0.4); /* primary/40 */
+    border-radius: 4px;
+    color: #f7e3ef; /* ghost */
+    font-family: 'Dunkin Bold', sans-serif;
+    font-size: 1.125rem; /* 18px */
+    transition: all 150ms ease-out;
+}
+
+.input-pixel::placeholder {
+    color: rgba(247, 227, 239, 0.5); /* ghost/50 */
+}
+
+.input-pixel:focus {
+    outline: none;
+    border-color: #f6967c; /* tertiary */
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 15px rgba(246, 150, 124, 0.3); /* glow effect */
+}
+
+/* ==========================================================================
+   DASHBOARD STATISTICS
+   ========================================================================== */
+
+/**
+ * Statistics Card Container
+ * Displays key metrics and statistics on the dashboard
+ */
+.stat-card {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgba(189, 250, 253, 0.1); /* border-primary/10 */
+}
+
+/**
+ * Statistics Label
+ * Typography for stat card labels
+ */
+.stat-label {
+    color: #89ffc6; /* text-secondary */
+    font-size: 1rem;
+}
+
+/**
+ * Statistics Value
+ * Typography for displaying numerical statistics
+ */
+.stat-value {
+    font-family: 'Dunkin Bold', sans-serif;
+    font-size: 2.25rem; /* text-4xl */
+    color: #f7e3ef; /* text-ghost */
+    line-height: 1.1;
+}
+
+/* ==========================================================================
+   NOTES PAGE COMPONENTS
+   ========================================================================== */
+
+/**
+ * Action Button Base
+ * Shared styling for top action buttons (Back, Complete, Delete)
+ */
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* gap-2 */
+    padding: 0.5rem 1rem; /* py-2 px-4 */
+    border-radius: 0.375rem; /* rounded-md */
+    font-family: 'Dunkin Bold', sans-serif;
+    color: #f7e3ef; /* text-ghost */
+    transition: all 150ms ease-out;
+    border: 2px solid transparent;
+}
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+/**
+ * Action Button Variants
+ * Different color schemes for various action types
+ */
+.action-btn-neutral {
+    background-color: #4a5588; /* A muted color */
+    border-color: #6976aa;
+}
+
+.action-btn-green {
+    background-color: #3d6355; /* A green tone */
+    border-color: #89ffc6;
+}
+
+.action-btn-red {
+    background-color: #8b3c3c; /* A red tone */
+    border-color: #f6967c;
+}
+
+/**
+ * Note Column Container
+ * Styling for note list columns (Recently Added, etc.)
+ */
+.note-column {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 1.5rem; /* p-6 */
+    border-radius: 0.5rem; /* rounded-lg */
+    height: 100%;
+}
+
+/**
+ * Individual Note Card
+ * Styling for note cards within columns with hover interactions
+ */
+.note-card {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1rem; /* p-4 */
+    border-radius: 0.375rem; /* rounded-md */
+    border: 2px solid rgba(189, 250, 253, 0.2); /* border-primary/20 */
+    transition: all 200ms ease;
+    cursor: pointer;
+}
+
+.note-card:hover {
+    border-color: #89ffc6; /* border-secondary */
+    transform: scale(1.03);
+    background-color: rgba(0, 0, 0, 0.5);
+}
