@@ -51,7 +51,7 @@
 
 
 <?php
-include __DIR__ . '/../moodTracker/moodlogmodal.php';
+include __DIR__ . '/../moodTracker/moodLogModal.php';
 ?>
 
 <script>
