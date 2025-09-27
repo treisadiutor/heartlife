@@ -104,7 +104,7 @@ class ProfileController extends Controller {
                     $_SESSION['username'] = $username;
                 }
             } else {
-                $_SESSION['error'] = 'Failed to update profile. Email might already be in use.';
+                $_SESSION['error'] = 'Failed to update profile. Username or email might already be in use.';
             }
         } else {
             $_SESSION['error'] = implode(', ', $errors);
