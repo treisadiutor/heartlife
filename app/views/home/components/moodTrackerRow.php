@@ -7,7 +7,7 @@
             <div class="flex flex-col items-center flex-1 min-w-[100px] max-w-[150px]">
                 
                 <?php if ($log['tracked']): ?>
-                    <img src="<?= BASE_URL ?>/assets/images/moodtracker/moods/<?= htmlspecialchars($log['mood']) ?>.svg" 
+                    <img src="<?= BASE_URL ?>/assets/images/moodTracker/moods/<?= htmlspecialchars($log['mood']) ?>.svg" 
                          alt="<?= htmlspecialchars($log['mood']) ?>" 
                          class="w-32 h-32 md:w-32 md:h-32">
                     

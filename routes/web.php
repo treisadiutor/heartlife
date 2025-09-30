@@ -55,6 +55,7 @@ $router->get('notes/view', 'NotesController@viewNote');
 
 // --- SELF CARE ---
 $router->get('self-care', 'CareController@selfcare');
+$router->get('care', 'CareController@selfcare');
 $router->get('self-care/add', 'CareController@addSelfCare');
 $router->get('self-care/edit', 'CareController@editSelfCare');
 $router->get('self-care/view', 'CareController@viewSelfCare');
@@ -62,6 +63,10 @@ $router->post('checklist/toggle', 'CareController@toggleCompletion');
 $router->post('checklist/add', 'CareController@add');
 $router->post('checklist/update', 'CareController@update');
 $router->post('checklist/delete', 'CareController@delete');
+
+// --- MENTAL HEALTH ASSESSMENT ---
+$router->post('care/saveAssessment', 'CareController@saveAssessment');
+$router->get('care/getLatestAssessment', 'CareController@getLatestAssessment');
 
 // --- REPORTS ---
 $router->get('reports', 'ReportController@report');

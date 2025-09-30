@@ -25,12 +25,12 @@
                     
                     <div class="relative flex items-center gap-4">
                         <div class="relative flex flex-col items-center">
-                            <img src="<?= BASE_URL ?>/assets/images/moodtracker/header/Day Counter2.svg" alt="Day Counter" class="h-32">
+                            <img src="<?= BASE_URL ?>/assets/images/moodtracker/header/daycounter2.svg" alt="Day Counter" class="h-32">
                             <span class="absolute font-dunkin text-accent text-4xl drop-shadow-[2px_2px_0_#4a5588]" style="top: 25%; right: 27%;"><?= $dayCount ?></span>
                         </div>
                     </div>
-                    <img src="<?= BASE_URL ?>/assets/images/moodtracker/header/How is your heart.svg" ...>
-                    <img src="<?= BASE_URL ?>/assets/images/moodtracker/header/Mood Check.svg" ...>
+                    <img src="<?= BASE_URL ?>/assets/images/moodtracker/header/howisyourheart.svg" ...>
+                    <img src="<?= BASE_URL ?>/assets/images/moodtracker/header/moodcheck.svg" ...>
                 </div>
             </div>
 

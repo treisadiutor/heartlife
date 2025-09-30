@@ -30,9 +30,107 @@
         </div>
 
         <!-- Flash Messages Container -->
-        <div id="flash-container" class="fixed top-4 right-4 z-100 space-y-2"></div>
+        <div id="flash-container" class="fixed top-4 right-4 z-[100] space-y-2"></div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Mental Health Assessment Button -->
+        <div class="mb-8 flex justify-between items-center">
+            <button id="start-assessment" class="btn-pixel text-white px-6 py-3 rounded-lg transition-colors">
+                Start Daily Assessment
+            </button>
+            <?php if (isset($latestAssessment)): ?>
+                <span class="text-ghost">Last assessment: <?= (new DateTime($latestAssessment['created_at']))->format('M j, Y g:i A') ?></span>
+            <?php endif; ?>
+        </div>
+
+        <!-- Mental Health Assessment Modal -->
+        <div id="assessment-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center hidden z-[50]">
+            <div class="bg-darkbg border border-primary/50 rounded-lg p-8 w-full max-w-2xl shadow-2xl relative max-h-[90vh] overflow-y-auto">
+                <!-- Close Button -->
+                <button id="close-assessment-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+
+                <h2 class="text-2xl text-accent mb-6">Daily Mental Health Assessment</h2>
+                
+                <!-- Progress Bar -->
+                <div class="w-full bg-white/10 rounded-full h-2 mb-6">
+                    <div id="assessment-progress" class="bg-accent h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <!-- Section Title -->
+                <h3 id="section-title" class="text-xl text-primary mb-4"></h3>
+
+                <!-- Cards Container -->
+                <div id="assessment-sections" class="relative">
+                    <?php foreach ($assessmentSections as $section => $questions): ?>
+                        <div class="section bg-white/5 p-6 rounded-xl hidden" data-section="<?= htmlspecialchars($section) ?>">
+                            <div class="space-y-6">
+                                <?php foreach ($questions as $number => $question): ?>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="answer-buttons flex space-x-2">
+                                            <button class="answer-btn yes-btn w-8 h-8 rounded-full border-2 border-green-500 hover:bg-green-500 hover:text-white transition-colors <?= isset($todayAssessment['answers'][$section][$number]) && $todayAssessment['answers'][$section][$number] ? 'bg-green-500 text-white' : 'text-green-500' ?>"
+                                                    data-section="<?= htmlspecialchars($section) ?>"
+                                                    data-question="<?= $number ?>"
+                                                    data-value="1">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button class="answer-btn no-btn w-8 h-8 rounded-full border-2 border-red-500 hover:bg-red-500 hover:text-white transition-colors <?= isset($todayAssessment['answers'][$section][$number]) && !$todayAssessment['answers'][$section][$number] ? 'bg-red-500 text-white' : 'text-red-500' ?>"
+                                                    data-section="<?= htmlspecialchars($section) ?>"
+                                                    data-question="<?= $number ?>"
+                                                    data-value="0">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <span class="text-ghost"><?= htmlspecialchars($question) ?></span>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <!-- Navigation Buttons -->
+                            <div class="flex justify-between mt-8">
+                                <button class="nav-btn prev-section btn-pixel text-white px-6 py-2 rounded-lg transition-colors <?= $section === array_key_first($assessmentSections) ? 'invisible' : '' ?>">
+                                    <i class="fas fa-chevron-left mr-2"></i> Previous
+                                </button>
+                                <?php if ($section === array_key_last($assessmentSections)): ?>
+                                    <button id="submit-assessment" class="btn-pixel text-white px-6 py-2 rounded-lg transition-colors">
+                                        Submit Assessment
+                                    </button>
+                                <?php else: ?>
+                                    <button class="nav-btn next-section btn-pixel text-white px-6 py-2 rounded-lg transition-colors">
+                                        Next <i class="fas fa-chevron-right ml-2"></i>
+                                    </button>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Display -->
+        <div id="assessment-feedback" class="mt-8 mb-4 p-4 rounded-xl bg-white/5 <?= isset($todayAssessment) ? '' : 'hidden' ?>">
+            <h3 class="text-xl text-primary mb-4">Today's Assessment</h3>
+            <?php if (isset($todayAssessment)): ?>
+                <p class="text-white text-xl mb-4"><?= htmlspecialchars($todayAssessment['feedback']) ?></p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-white">
+                    <?php 
+                    $sections = ['sleep_rest', 'body_energy', 'emotions_mood', 'social_support', 
+                            'mind_focus', 'self_care', 'red_flags'];
+                    foreach ($sections as $section):
+                        $score = $todayAssessment["{$section}_score"];
+                        $color = $score >= 80 ? 'text-green-400' : 
+                                ($score >= 60 ? 'text-yellow-400' : 'text-red-400');
+                    ?>
+                        <div class="text-center p-3 bg-white/5 rounded-lg">
+                            <div class="font-bold mb-1"><?= ucwords(str_replace('_', ' ', $section)) ?></div>
+                            <div class="<?= $color ?> text-2xl font-bold"><?= $score ?>%</div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             
             <!-- Morning Checklist -->
             <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl shadow-lg p-6 flex flex-col items-center border border-white/10">
@@ -221,7 +319,7 @@ include __DIR__ . '/../moodTracker/moodLogModal.php';
 </button>
 
 <!-- Add Checklist Item Modal -->
-<div id="add-checklist-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center hidden z-50">
+<div id="add-checklist-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center hidden z-[50]">
     <div class="bg-darkbg border border-primary/50 rounded-lg p-8 w-full max-w-md shadow-2xl relative">
         
         <button id="close-add-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white">
@@ -255,7 +353,7 @@ include __DIR__ . '/../moodTracker/moodLogModal.php';
 </div>
 
 <!-- Edit Checklist Item Modal -->
-<div id="edit-checklist-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center hidden z-50">
+<div id="edit-checklist-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center hidden z-[50]">
     <div class="bg-darkbg border border-primary/50 rounded-lg p-8 w-full max-w-md shadow-2xl relative">
         
         <button id="close-edit-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white">
@@ -519,6 +617,246 @@ include __DIR__ . '/../moodTracker/moodLogModal.php';
                 }, 300);
             }
         }
+</script>
+
+<script>
+// Mental Health Assessment
+document.addEventListener('DOMContentLoaded', () => {
+    const answers = {};
+    const modal = document.getElementById('assessment-modal');
+    const startButton = document.getElementById('start-assessment');
+    const closeButton = document.getElementById('close-assessment-modal');
+    const answerButtons = document.querySelectorAll('.answer-btn');
+    const submitButton = document.getElementById('submit-assessment');
+    const feedbackDisplay = document.getElementById('assessment-feedback');
+    const progressBar = document.getElementById('assessment-progress');
+    const sectionTitle = document.getElementById('section-title');
+    let currentSectionIndex = 0;
+    const sections = Array.from(document.querySelectorAll('.section'));
+
+    // Check if assessment is needed today
+    const checkAssessmentNeeded = () => {
+        <?php if ($assessmentNeeded): ?>
+            setTimeout(() => {
+                modal.classList.remove('hidden');
+                showCurrentSection();
+            }, 1000); // Show modal after 1 second delay
+        <?php endif; ?>
+    };
+
+    // Show current section
+    const showCurrentSection = () => {
+        sections.forEach((section, index) => {
+            section.classList.toggle('hidden', index !== currentSectionIndex);
+        });
+
+        // Update progress bar
+        const progress = ((currentSectionIndex + 1) / sections.length) * 100;
+        progressBar.style.width = `${progress}%`;
+
+        // Update section title
+        const currentSection = sections[currentSectionIndex];
+        const sectionName = currentSection.dataset.section;
+        sectionTitle.textContent = sectionName.replace('_', ' ').split(' ').map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1)
+        ).join(' ');
+    };
+
+    // Navigation functions
+    const nextSection = () => {
+        if (currentSectionIndex < sections.length - 1) {
+            currentSectionIndex++;
+            showCurrentSection();
+        }
+    };
+
+    const prevSection = () => {
+        if (currentSectionIndex > 0) {
+            currentSectionIndex--;
+            showCurrentSection();
+        }
+    };
+
+    // Modal controls
+    startButton.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        currentSectionIndex = 0;
+        showCurrentSection();
+    });
+
+    closeButton.addEventListener('click', () => {
+        if (Object.keys(answers).length === 0 || confirm('Are you sure you want to close? Your progress will be lost.')) {
+            modal.classList.add('hidden');
+            // Reset answers and progress
+            Object.keys(answers).forEach(key => delete answers[key]);
+            currentSectionIndex = 0;
+            showCurrentSection();
+        }
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            if (confirm('Are you sure you want to close? Your progress will be lost.')) {
+                modal.classList.add('hidden');
+            }
+        }
+    });
+
+    // Navigation button listeners
+    document.querySelectorAll('.nav-btn.next-section').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const currentSection = sections[currentSectionIndex];
+            const sectionName = currentSection.dataset.section;
+            const questionsInSection = currentSection.querySelectorAll('.answer-btn.yes-btn').length;
+            const answeredQuestions = Object.keys(answers[sectionName] || {}).length;
+
+            if (answeredQuestions < questionsInSection) {
+                showFlashMessage('Please answer all questions in this section before proceeding.', 'error');
+                return;
+            }
+            nextSection();
+        });
+    });
+
+    document.querySelectorAll('.nav-btn.prev-section').forEach(btn => {
+        btn.addEventListener('click', prevSection);
+    });
+
+    // Initialize the assessment if needed
+    checkAssessmentNeeded();
+
+    // Initialize answers object with existing answers if any (only from today)
+    document.querySelectorAll('.section').forEach(section => {
+        const sectionName = section.dataset.section;
+        answers[sectionName] = {};
+
+        // Only initialize with today's answers, not previous days
+        section.querySelectorAll('.answer-btn.bg-green-500, .answer-btn.bg-red-500').forEach(activeBtn => {
+            const questionNum = parseInt(activeBtn.dataset.question);
+            answers[sectionName][questionNum] = activeBtn.classList.contains('yes-btn');
+        });
+    });
+
+    answerButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const section = this.dataset.section;
+            const question = parseInt(this.dataset.question);
+            const value = this.dataset.value === '1';
+            const siblingButton = this.classList.contains('yes-btn') ? 
+                this.nextElementSibling : 
+                this.previousElementSibling;
+
+            // Initialize section in answers if it doesn't exist
+            answers[section] = answers[section] || {};
+
+            // Handle button toggling
+            const wasActive = this.classList.contains('active');
+
+            // Reset both buttons first
+            [this, siblingButton].forEach(btn => {
+                btn.classList.remove('bg-green-500', 'bg-red-500', 'text-white', 'active');
+            });
+
+            if (!wasActive) {
+                // Activate this button
+                this.classList.add(value ? 'bg-green-500' : 'bg-red-500', 'text-white', 'active');
+                answers[section][question] = value;
+            } else {
+                // If clicking active button, clear answer
+                delete answers[section][question];
+            }
+
+            // Log current state for debugging
+            console.log('Updated answers:', {
+                section: section,
+                question: question,
+                value: value,
+                currentAnswers: JSON.parse(JSON.stringify(answers))
+            });
+        });
+    });
+
+    submitButton.addEventListener('click', function() {
+        // Disable submit button to prevent double submission
+        submitButton.disabled = true;
+        submitButton.innerHTML = 'Submitting...';
+
+        // Validate that all questions in all sections are answered
+        let unansweredSections = [];
+        sections.forEach(section => {
+            const sectionName = section.dataset.section;
+            const questionCount = section.querySelectorAll('.answer-btn.yes-btn').length;
+            const answeredCount = Object.keys(answers[sectionName] || {}).length;
+            
+            if (answeredCount < questionCount) {
+                unansweredSections.push(sectionName.replace('_', ' '));
+            }
+        });
+
+        if (unansweredSections.length > 0) {
+            showFlashMessage(
+                'Please answer all questions in sections: ' + 
+                unansweredSections.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(', '),
+                'error'
+            );
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Submit Assessment';
+            return;
+        }
+
+        // Validate answers object is not empty
+        if (Object.keys(answers).length === 0) {
+            showFlashMessage('Please answer at least one question before submitting.', 'error');
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Submit Assessment';
+            return;
+        }
+
+        // Submit assessment
+        submitButton.disabled = true;
+        submitButton.textContent = 'Saving...';
+
+        fetch('<?= BASE_URL ?>/care/saveAssessment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ answers: answers })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Close the modal and show success message
+                modal.classList.add('hidden');
+                showFlashMessage('Assessment saved successfully!', 'success');
+                
+                // Update the feedback section
+                feedbackDisplay.classList.remove('hidden');
+                const assessment = data.assessment;
+                
+                // Update scores and feedback display
+                setTimeout(() => {
+                    location.reload(); // Reload to show updated assessment
+                }, 1500);
+            } else {
+                showFlashMessage('Failed to save assessment: ' + (data.message || 'Unknown error'), 'error');
+            }
+        })
+        .catch(error => {
+            showFlashMessage('An error occurred while saving the assessment', 'error');
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Submit Assessment';
+        });
+    });
+});
 </script>
 
 </body>
