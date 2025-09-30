@@ -3,9 +3,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#bdfafd',
-                        secondary: '#89ffc6',
-                        tertiary: '#f6967c',
+                        primary: '#FDFD96',
+                        secondary: '#A7C7E7',
+                        tertiary: '#FFD1DC',
                         accent: '#f4bbd9',
                         ghost: '#f7e3ef',
                         darkbg: '#2c2a4a'

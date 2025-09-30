@@ -69,7 +69,7 @@ switch ($error_code) {
     </style>
 </head>
 
-<body class="font-dunkin bg-darkbg h-screen w-screen text-ghost flex flex-col justify-between overflow-hidden" style="background-image: url('<?= BASE_URL ?>/assets/images/background.png'); background-size: cover; background-position: center; background-attachment: fixed; backdrop-filter: blur(15px);" x-data="{ openModal: null }">
+<body class="font-dunkin bg-darkbg h-screen w-screen text-ghost flex flex-col justify-between overflow-hidden" style="background-image: url('<?= BASE_URL ?>/assets/images/background.jpg'); background-size: cover; background-position: center; background-attachment: fixed; backdrop-filter: blur(15px);" x-data="{ openModal: null }">
     
     <main class="flex items-center justify-center flex-1 w-full px-4 py-8">
 <div class="absolute inset-0 bg-black bg-opacity-50 z-[-1]"></div>

@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle ?? 'Profile Management') ?> - HeartLife</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <?php include __DIR__ . '/../components/tailwind.php'; ?>
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/styles.css">
 </head>
 
-<body class="bg-darkbg font-dunkin text-ghost relative" style="background-image: url('<?= BASE_URL ?>/assets/images/background.png'); background-size: cover; background-attachment: fixed; backdrop-filter: blur(15px);">
+<body class="bg-darkbg font-dunkin text-ghost relative" style="background-image: url('<?= BASE_URL ?>/assets/images/background.jpg'); background-size: cover; background-attachment: fixed; backdrop-filter: blur(15px);">
     <div class="absolute inset-0 bg-black bg-opacity-50 z-[-1]"></div>
 
 <div class="flex">

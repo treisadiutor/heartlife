@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/styles.css">
 </head>
 
-<body class="bg-darkbg font-dunkin text-ghost relative" style="background-image: url('<?= BASE_URL ?>/assets/images/background.png'); background-size: cover; background-attachment: fixed; backdrop-filter: blur(15px);">
+<body class="bg-darkbg font-dunkin text-ghost relative" style="background-image: url('<?= BASE_URL ?>/assets/images/background.jpg'); background-size: cover; background-attachment: fixed; backdrop-filter: blur(15px);">
 <div class="absolute inset-0 bg-black bg-opacity-50 z-[-1]"></div>
 
 <div class="flex">
